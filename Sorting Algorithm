@@ -1,0 +1,43 @@
+#include <stdio.h>
+void swap(int *one,int *two){
+    int temp=*one;
+    *one=*two;
+    *two=temp;
+}
+int split(int *arr,int position,int pivot){
+    int cursor=position+1;
+    while(cursor!=pivot){
+        if(arr[cursor]<arr[pivot]){
+            swap(&arr[cursor],&arr[position]);
+            ++position;   
+        }
+        ++cursor;
+    }
+    swap(&arr[pivot],&arr[position]);
+    return position;
+}
+void QuickSort(int *arr,int start,int end){
+    int pivot;
+    if(start<end){
+        pivot=split(arr,start,end);
+        QuickSort(arr,start,pivot-1);
+        QuickSort(arr,pivot+1,end);
+    }
+}
+void Printer(int *arr,int n){
+    printf("{ ");
+    for(int i=0;i<n;i++) 
+        printf("%d ",arr[i]);
+    printf("}\n");
+}
+int main()
+{
+    int arr[]={101, 71, 81, 91, 11, 51};
+    int n=sizeof(arr)/sizeof(int);
+    printf("Before Sorting :  ");
+    Printer(arr,n);
+    QuickSort(arr,0,n-1);
+    printf("After Sorting  :  ");
+    Printer(arr,n);
+    return 0;
+}
